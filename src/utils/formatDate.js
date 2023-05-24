@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
-export function formatMounthDate(date) {
-  return dayjs(date).format('MM月DD日')
+export function formatMounthDate(date, formatStr = 'MM月DD日') {
+  return dayjs(date).format(formatStr)
 }
 
 export function stayDay(startDate, endDate) {
