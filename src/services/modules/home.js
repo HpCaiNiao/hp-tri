@@ -1,18 +1,22 @@
-import HYRequest from '../request'
+import hyRequest from '../request'
 
 export function getHomeHotSuggests() {
-  return HYRequest.get({ url: '/home/hotSuggests' })
+  return hyRequest.get({ 
+    url: "/home/hotSuggests" 
+  })
 }
 
 export function getHomeCategories() {
-  return HYRequest.get({ url: '/home/categories' })
+  return hyRequest.get({
+    url: "/home/categories"
+  })
 }
 
-export function getHomeHouseList(nowPage) {
-  return HYRequest.get({
-    url: '/home/houselist',
+export function getHomeHouselist(currentPage) {
+  return hyRequest.get({
+    url: "/home/houselist",
     params: {
-      page: nowPage,
-    },
+      page: currentPage
+    }
   })
 }

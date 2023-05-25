@@ -1,28 +1,39 @@
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onDeactivated, onMounted, onUnmounted, ref } from 'vue'
 import { throttle } from 'underscore'
 
-export default function useScroll() {
-  const isScrollBottom = ref(false)
-  const scrollTop = ref(0)
+export default function useScroll(elRef) {
+  let el = window
+
+  const isReachBottom = ref(false)
+
   const clientHeight = ref(0)
+  const scrollTop = ref(0)
   const scrollHeight = ref(0)
 
-  const scrollListener = throttle(() => {
-    // underscore的节流函数，防止scroll事件触发过于频繁
-    scrollTop.value = document.documentElement.scrollTop
-    clientHeight.value = document.documentElement.clientHeight
-    scrollHeight.value = document.documentElement.scrollHeight
-    if (Math.ceil(scrollTop.value + clientHeight.value) >= scrollHeight.value) {
-      isScrollBottom.value = true
+  // 防抖/节流
+  const scrollListenerHandler = throttle(() => {
+    if (el === window) {
+      clientHeight.value = document.documentElement.clientHeight
+      scrollTop.value = document.documentElement.scrollTop
+      scrollHeight.value = document.documentElement.scrollHeight
+    } else {
+      clientHeight.value = el.clientHeight
+      scrollTop.value = el.scrollTop
+      scrollHeight.value = el.scrollHeight
     }
-  }, 200)
+    if (Math.ceil(clientHeight.value + scrollTop.value) >= scrollHeight.value) {
+      isReachBottom.value = true
+    }
+  }, 100)
 
   onMounted(() => {
-    window.addEventListener('scroll', scrollListener)
-  })
-  onUnmounted(() => {
-    window.removeEventListener('scroll', scrollListener)
+    if (elRef) el = elRef.value
+    el.addEventListener('scroll', scrollListenerHandler)
   })
 
-  return { isScrollBottom, scrollTop, clientHeight, scrollHeight }
+  onUnmounted(() => {
+    el.removeEventListener('scroll', scrollListenerHandler)
+  })
+
+  return { isReachBottom, clientHeight, scrollTop, scrollHeight }
 }

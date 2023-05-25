@@ -2,7 +2,7 @@
   <div class="categories">
     <template v-for="(item, index) in categories" :key="item.id">
       <div class="item">
-        <img :src="item.pictureUrl" alt="" />
+        <img :src="item.pictureUrl" alt="">
         <div class="text">{{ item.title }}</div>
       </div>
     </template>
@@ -10,39 +10,45 @@
 </template>
 
 <script setup>
-import useHomeStore from '@/stores/modules/home'
-import { storeToRefs } from 'pinia'
+import useHomeStore from '@/stores/modules/home';
+import { storeToRefs } from 'pinia';
 
 const homeStore = useHomeStore()
 const { categories } = storeToRefs(homeStore)
+
 </script>
 
 <style lang="less" scoped>
+
 .categories {
   display: flex;
-  padding: 10px 15px;
   overflow-x: auto;
+  height: 80px;
+  padding: 0 10px;
+  margin-top: 8px;
   &::-webkit-scrollbar {
     display: none;
   }
 
   .item {
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    flex-shrink: 0;
-    width: 60px;
-    margin-bottom: 15px;
+    justify-content: center;
+    width: 70px;
     text-align: center;
+
     img {
-      width: 70%;
+      width: 32px;
+      height: 32px;
     }
+
     .text {
       font-size: 12px;
-      color: #333;
-      margin-top: 10px;
+      margin-top: 8px;
     }
   }
 }
+
 </style>
