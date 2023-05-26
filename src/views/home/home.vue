@@ -1,26 +1,24 @@
 <template>
   <div class="home" ref="homeRef">
-    <home-nav-bar/>
+    <home-nav-bar />
     <div class="banner">
-      <img src="@/assets/img/home/banner.webp" alt="">
+      <img src="@/assets/img/home/banner.webp" alt="" />
     </div>
     <home-search-box />
     <home-categories />
     <div class="search-bar" v-if="isShowSearchBar">
-      <search-bar :start-date="'09.19'" :end-date="'09.20'"/>
+      <search-bar :start-date="'09.19'" :end-date="'09.20'" />
     </div>
     <home-content />
-
-    <!-- <button @click="moreBtnClick">加载更多</button> -->
   </div>
 </template>
 
 <script>
-  export default { name: "home" }
+export default { name: 'home' }
 </script>
 <script setup>
 import { onActivated, ref, watch } from 'vue'
-import useHomeStore from '@/stores/modules/home';
+import useHomeStore from '@/stores/modules/home'
 import HomeNavBar from './cpns/home-nav-bar.vue'
 import HomeSearchBox from './cpns/home-search-box.vue'
 import HomeCategories from './cpns/home-categories.vue'
@@ -28,7 +26,7 @@ import HomeContent from './cpns/home-content.vue'
 import SearchBar from '@/components/search-bar/search-bar.vue'
 
 import useScroll from '@/hooks/useScroll'
-import { computed } from '@vue/reactivity';
+import { computed } from '@vue/reactivity'
 
 // 发送网络请求
 const homeStore = useHomeStore()
@@ -57,15 +55,12 @@ const isShowSearchBar = computed(() => {
   return scrollTop.value >= 360
 })
 
-
 // 跳转回home时, 保留原来的位置
 onActivated(() => {
   homeRef.value?.scrollTo({
-    top: scrollTop.value
+    top: scrollTop.value,
   })
 })
-
-
 </script>
 
 <style lang="less" scoped>
@@ -89,8 +84,7 @@ onActivated(() => {
   left: 0;
   right: 0;
   height: 45px;
-  padding: 16px 16px 10px;
+  padding: 10px 16px 10px;
   background-color: #fff;
 }
-
 </style>
